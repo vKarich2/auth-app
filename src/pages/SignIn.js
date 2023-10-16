@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { login } from "../firebase";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login as loginHandle } from "../store/auth";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,17 +11,17 @@ import Logo from "../images/logo_2.svg"
 const SignIn = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const user = await login(email, password);
-    dispatch(loginHandle(user));
-    navigate('/', {
-      replace: true,
-    });
+    if(user){
+      navigate('/', {
+        replace: true,
+      });
+    }
   };
 
   return (
